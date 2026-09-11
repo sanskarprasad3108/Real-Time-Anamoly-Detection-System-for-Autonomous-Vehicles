@@ -30,7 +30,7 @@ logger = logging.getLogger(__name__)
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
-from flask import Flask, render_template, jsonify, request
+from flask import Flask, render_template, jsonify, request, send_from_directory
 import numpy as np
 import joblib
 import tensorflow as tf
@@ -1114,6 +1114,11 @@ def select_failure_scenario():
 def index():
     """Main dashboard - instant render, data loaded via AJAX."""
     return render_template('index.html')
+
+@app.route('/brand.css')
+def brand_stylesheet():
+    """Serve the shared visual system used by every dashboard view."""
+    return send_from_directory(BASE_DIR, 'brand.css')
 
 @app.route('/component/<component_name>')
 def component_interface(component_name):
